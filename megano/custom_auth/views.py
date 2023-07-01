@@ -9,6 +9,10 @@ from .models import Profile
 from .serializers import ProfileSerializer
 import json
 
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from .serializers import PasswordSerializer
+
 
 class SignInView(APIView):
     def post(self, request):
@@ -49,7 +53,6 @@ def signOut(request):
     return Response(status=status.HTTP_200_OK)
 
 
-# custom_auth/views.py
 
 
 class ProfileView(APIView):
@@ -67,3 +70,22 @@ class ProfileView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfilePasswordView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = PasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            current_password = serializer.validated_data['currentPassword']
+            new_password = serializer.validated_data['newPassword']
+            if user.check_password(current_password):
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid current password.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
