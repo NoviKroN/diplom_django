@@ -5,13 +5,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import logout
 from rest_framework import permissions
-from .models import Profile
-from .serializers import ProfileSerializer
+from .models import Profile, Avatar
+from .serializers import ProfileSerializer, PasswordSerializer, AvatarSerializer
 import json
 
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from .serializers import PasswordSerializer
+
+# from django.contrib.auth import update_session_auth_hash
+# from django.contrib.auth.forms import PasswordChangeForm
+# from .serializers import PasswordSerializer
+# from django.db.utils import IntegrityError
 
 
 class SignInView(APIView):
@@ -53,8 +55,6 @@ def signOut(request):
     return Response(status=status.HTTP_200_OK)
 
 
-
-
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -71,6 +71,7 @@ class ProfileView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ProfilePasswordView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -83,9 +84,23 @@ class ProfilePasswordView(APIView):
             if user.check_password(current_password):
                 user.set_password(new_password)
                 user.save()
-                update_session_auth_hash(request, user)
                 return Response(status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Invalid current password.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileAvatarView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        profile = Profile.objects.get(user=request.user)
+        avatar_serializer = AvatarSerializer(data=request.FILES["avatar"])
+        if avatar_serializer.is_valid():
+            avatar = avatar_serializer.save()
+            profile.avatar = avatar
+            profile.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(avatar_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

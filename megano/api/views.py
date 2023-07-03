@@ -292,26 +292,26 @@ def basket(request):
 		]
 		return JsonResponse(data, safe=False)
 
-def signIn(request):
-	if request.method == "POST":
-		body = json.loads(request.body)
-		username = body['username']
-		password = body['password']
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
-			return HttpResponse(status=200)
-		else:
-			return HttpResponse(status=500)
+# def signIn(request):
+# 	if request.method == "POST":
+# 		body = json.loads(request.body)
+# 		username = body['username']
+# 		password = body['password']
+# 		user = authenticate(request, username=username, password=password)
+# 		if user is not None:
+# 			login(request, user)
+# 			return HttpResponse(status=200)
+# 		else:
+# 			return HttpResponse(status=500)
 
-def signUp(request):
-	user = User.objects.create_user("mir232", "lennon@thebeatles.com", "pass232")
-	user.save()
-	return HttpResponse(status=200)
+# def signUp(request):
+# 	user = User.objects.create_user("mir232", "lennon@thebeatles.com", "pass232")
+# 	user.save()
+# 	return HttpResponse(status=200)
 
-def signOut(request):
-	logout(request)
-	return HttpResponse(status=200)
+# def signOut(request):
+# 	logout(request)
+# 	return HttpResponse(status=200)
 
 def product(request, id):
 	data = {
@@ -382,35 +382,35 @@ def productReviews(request, id):
 	]
 	return JsonResponse(data, safe=False)
 
-def profile(request):
-	if(request.method == 'GET'):
-		data = {
-			"fullName": "Annoying Orange",
-			"email": "no-reply@mail.ru",
-			"phone": "88002000600",
-			"avatar": {
-				"src": "https://proprikol.ru/wp-content/uploads/2020/12/kartinki-ryabchiki-14.jpg",
-				"alt": "hello alt",
-			}
-		}
-		return JsonResponse(data)
+# def profile(request):
+# 	if(request.method == 'GET'):
+# 		data = {
+# 			"fullName": "Annoying Orange",
+# 			"email": "no-reply@mail.ru",
+# 			"phone": "88002000600",
+# 			"avatar": {
+# 				"src": "https://proprikol.ru/wp-content/uploads/2020/12/kartinki-ryabchiki-14.jpg",
+# 				"alt": "hello alt",
+# 			}
+# 		}
+# 		return JsonResponse(data)
 
-	elif(request.method == 'POST'):
-		data = {
-			"fullName": "Annoying Green",
-			"email": "no-reply@mail.ru",
-			"phone": "88002000600",
-			"avatar": {
-				"src": "https://proprikol.ru/wp-content/uploads/2020/12/kartinki-ryabchiki-14.jpg",
-				"alt": "hello alt",
-			}
-		}
-		return JsonResponse(data)
-
-	return HttpResponse(status=500)
-
-def profilePassword(request):
-	return HttpResponse(status=200)
+# 	elif(request.method == 'POST'):
+# 		data = {
+# 			"fullName": "Annoying Green",
+# 			"email": "no-reply@mail.ru",
+# 			"phone": "88002000600",
+# 			"avatar": {
+# 				"src": "https://proprikol.ru/wp-content/uploads/2020/12/kartinki-ryabchiki-14.jpg",
+# 				"alt": "hello alt",
+# 			}
+# 		}
+# 		return JsonResponse(data)
+#
+# 	return HttpResponse(status=500)
+#
+# def profilePassword(request):
+# 	return HttpResponse(status=200)
 
 def orders(request):
 	if(request.method == 'GET'):
@@ -557,7 +557,7 @@ def payment(request, id):
 	print('qweqwewqeqwe', id)
 	return HttpResponse(status=200)
 
-def avatar(request):
-	if request.method == "POST":
-# 		print(request.FILES["avatar"])
-		return HttpResponse(status=200)
+# def avatar(request):
+# 	if request.method == "POST":
+# # 		print(request.FILES["avatar"])
+# 		return HttpResponse(status=200)

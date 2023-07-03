@@ -22,5 +22,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class PasswordSerializer(serializers.Serializer):
-    currentPassword = serializers.CharField(required=True)
-    newPassword = serializers.CharField(required=True)
+    currentPassword = serializers.CharField()
+    newPassword = serializers.CharField()
