@@ -12,6 +12,7 @@ import json
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .serializers import PasswordSerializer
+from django.db.utils import IntegrityError
 
 
 class SignInView(APIView):
@@ -44,6 +45,11 @@ class SignUpView(APIView):
                 login(request, user)
 
             return Response(status=status.HTTP_201_CREATED)
+        # except Exception:
+        #     return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except IntegrityError:
+            return Response({"error": "Пользователь с таким именем уже существует."}, status=status.HTTP_400_BAD_REQUEST)
+
         except Exception:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
