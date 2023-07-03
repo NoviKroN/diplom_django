@@ -22,6 +22,5 @@ urlpatterns = [
     path("", include("frontend.urls")),
     path("api/", include("api.urls")),
     path('custom_auth/', include('custom_auth.urls')),
-    # path('', include('custom_auth.urls')),
-    # path('auth/', include('custom_auth.urls')),
+
 ]

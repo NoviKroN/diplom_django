@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Avatar(models.Model):
     """Модель для хранения аватара пользователя"""
 
@@ -15,8 +16,10 @@ class Avatar(models.Model):
         verbose_name = "Аватар"
         verbose_name_plural = "Аватары"
 
+
 class Profile(models.Model):
     """Модель профиля пользователя"""
+
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile'
     )
