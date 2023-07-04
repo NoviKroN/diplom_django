@@ -33,8 +33,14 @@ class ProductReview(models.Model):
     rate = models.IntegerField()
     date = models.DateTimeField()
 
+    class Meta:
+        verbose_name = 'Product Review'
+        verbose_name_plural = 'Product Reviews'
+
 
 class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specifications')
     name = models.CharField(max_length=255)
     value = models.CharField(max_length=255)
+
+
