@@ -36,11 +36,15 @@ class SignUpView(APIView):
         name = user_data.get("name")
         username = user_data.get("username")
         password = user_data.get("password")
+        print(user_data)
 
         try:
             user = User.objects.create_user(username=username, password=password)
-            profile = Profile.objects.create(user=user, first_name=name)
+            # profile = Profile.objects.create(user=user, first_name=name)
+            Profile.objects.create(user=user, first_name=name)
+            print(user_data)
             user = authenticate(request, username=username, password=password)
+            print(user)
             if user is not None:
                 login(request, user)
 
