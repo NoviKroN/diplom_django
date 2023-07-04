@@ -1,3 +1,51 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
-# Create your views here.
+from .models import Product
+
+
+class ProductView(APIView):
+    def get(self, request, id):
+        try:
+            product = Product.objects.get(id=id)
+            serialized_product = {
+                "id": product.id,
+                "category": product.category,
+                "price": str(product.price),
+                "count": product.count,
+                "date": str(product.date),
+                "title": product.title,
+                "description": product.description,
+                "fullDescription": product.fullDescription,
+                "freeDelivery": product.freeDelivery,
+                "images": [
+                    {
+                        "src": image.src.url,
+                        "alt": image.alt
+                    }
+                    for image in product.images.all()
+                ],
+                "tags": [tag.name for tag in product.tags.all()],
+                "reviews": [
+                    {
+                        "author": review.author,
+                        "email": review.email,
+                        "text": review.text,
+                        "rate": review.rate,
+                        "date": str(review.date)
+                    }
+                    for review in product.reviews.all()
+                ],
+                "specifications": [
+                    {
+                        "name": spec.name,
+                        "value": spec.value
+                    }
+                    for spec in product.specifications.all()
+                ],
+                "rating": product.rating
+            }
+            return Response(serialized_product, status=status.HTTP_200_OK)
+        except Product.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
