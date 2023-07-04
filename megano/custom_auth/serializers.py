@@ -14,11 +14,15 @@ class AvatarSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    email = serializers.SerializerMethodField()
     avatar = AvatarSerializer()
 
     class Meta:
         model = Profile
         fields = ["fullName", "email", "phone", "avatar"]
+
+    def get_email(self, obj):
+        return obj.user.email
 
 
 class PasswordSerializer(serializers.Serializer):

@@ -304,10 +304,10 @@ def basket(request):
 # 		else:
 # 			return HttpResponse(status=500)
 
-# def signUp(request):
-# 	user = User.objects.create_user("mir232", "lennon@thebeatles.com", "pass232")
-# 	user.save()
-# 	return HttpResponse(status=200)
+def signUp(request):
+	user = User.objects.create_user("mir232", "lennon@thebeatles.com", "pass232")
+	user.save()
+	return HttpResponse(status=200)
 
 # def signOut(request):
 # 	logout(request)
