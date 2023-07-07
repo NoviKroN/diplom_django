@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api',
     'custom_auth',
     'product',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     # 'rest_framework.middleware.AuthenticationMiddleware',
     # 'rest_framework.middleware.AuthorizationMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware', # for insomnia
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
