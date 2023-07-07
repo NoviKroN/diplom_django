@@ -8,6 +8,11 @@ from product.models import Product
 from .models import Cart
 
 
+from django.views.decorators.csrf import csrf_exempt # for decorator
+from django.utils.decorators import method_decorator # for decorator
+
+
+@method_decorator(csrf_exempt, name='dispatch')
 class CartDetailView(APIView):
     """APIView для корзины, реализация методов get, post и delete"""
 
