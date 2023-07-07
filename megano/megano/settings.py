@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api',
     'custom_auth',
     'product',
+    'cart',
 ]
 
 MIDDLEWARE = [
